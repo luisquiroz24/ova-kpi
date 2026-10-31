@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parada 4 · Interpretación y toma de decisiones · Del dato a la decisión</title>
+<style>
+:root{--ink:#14251B;--muted:#47574D;--line:#D3DCD5;--bg:#F5F8F5;--green:#0B6B2E;--green-d:#08471F}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+a{color:#0B5C8A}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header.top{background:var(--green-d);color:#fff}
+header.top .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;flex-direction:column;line-height:1.25}
+.brand strong{font-size:17px}.brand span{font-size:14px;color:#CFE3D5}
+nav.paradas{display:flex;flex-wrap:wrap;gap:6px}
+nav.paradas a{color:#fff;text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid #4F7F5F;min-height:36px;display:inline-flex;align-items:center}
+nav.paradas a[aria-current=page]{background:#fff;color:var(--green-d);font-weight:700}
+.hero{background:var(--c-soft);border-bottom:5px solid var(--c)}
+.hero .wrap{padding-top:28px;padding-bottom:26px}
+.badge{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:4px 16px;font-weight:700;font-size:15px}
+h1{font-size:34px;line-height:1.15;margin:12px 0 8px}
+h2{font-size:24px;margin:0 0 10px;line-height:1.25}
+h3{font-size:19px;margin:16px 0 6px}
+.lead{font-size:19px;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.card.accent{border-top:5px solid var(--c)}
+.card.reto{background:#FFFBEA;border-color:#EBD58A}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.mini .n{font-weight:700;color:var(--c)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:10px;background:var(--green);color:#fff;font-weight:600;text-decoration:none;border:2px solid var(--green);cursor:pointer;font-size:16px;font-family:inherit}
+.btn:hover{background:var(--green-d)}
+.btn.sec{background:#fff;color:var(--green-d)}
+.btn.sec:hover{background:#EEF5F0}
+.btn.sm{min-height:40px;padding:0 14px;font-size:15px;margin-top:8px}
+.btn[disabled]{opacity:.55;cursor:default}
+.fb{border-radius:10px;padding:12px 14px;margin-top:10px}
+.fb.ok{background:#E6F4EA;border:1px solid #8CC49B}
+.fb.no{background:#FFF1E6;border:1px solid #EFB384}
+.fb.info{background:#EEF4FB;border:1px solid #A9C5E8}
+fieldset.q{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+fieldset.q legend{padding:0 6px;font-size:17px}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:8px;cursor:pointer}
+label.opt:hover{background:#F0F4F1}
+label.opt input{margin-top:6px;width:18px;height:18px;flex:none}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:16px;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#EEF3EF}
+td.hl{background:#FDECEC;font-weight:700}
+pre.code{background:#0F1F16;color:#E8F5EC;padding:14px;border-radius:10px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:14px;margin:8px 0;white-space:pre-wrap;word-break:break-word}
+.codebox{position:relative}
+.codebox pre.code{padding-right:84px}
+.codebox .btn{position:absolute;top:8px;right:8px;min-height:34px;padding:0 10px;font-size:13px;margin:0}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps>li{counter-increment:s;position:relative;padding-left:54px;margin:22px 0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.video{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.placeholder{border:2px dashed #AEBBB2;border-radius:12px;padding:22px;text-align:center;color:var(--muted);background:#FAFCFA}
+.navnext{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:30px 0 10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin-bottom:10px}
+.tabs button{font:inherit;font-weight:600;background:none;border:none;border-bottom:4px solid transparent;padding:10px 14px;cursor:pointer;color:var(--muted);min-height:44px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--c)}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;flex:none}
+select{font:inherit;padding:8px;border-radius:8px;border:1px solid #9AA9A0;min-height:44px;max-width:100%}
+.match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px 14px;align-items:center;margin:10px 0}
+.match .mark{font-weight:700}
+textarea{width:100%;min-height:180px;font:inherit;padding:12px;border-radius:10px;border:1px solid #9AA9A0}
+.counter{font-size:15px;color:var(--muted)}
+.visual{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.visual svg{width:120px;height:80px}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+footer{margin-top:40px;background:#EAF0EB;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{padding-top:16px;padding-bottom:16px}
+:focus-visible{outline:3px solid #E0A800;outline-offset:2px}
+.sr{position:absolute;left:-9999px}
+@media (max-width:640px){h1{font-size:28px}.match{grid-template-columns:1fr}body{font-size:16px}}
+</style>
+</head>
+<body style="--c:#6A1B9A;--c-soft:#F4EAF8">
+<a class="sr" href="#contenido">Saltar al contenido</a>
+<header class="top"><div class="wrap">
+<div class="brand"><strong>Del dato a la decisión</strong><span>Analítica de datos 1 · Ingeniería Industrial · CECAR</span></div>
+<nav class="paradas" aria-label="Paradas del OVA"><a href="parada1.html" data-parada="1">Parada 1</a><a href="parada2.html" data-parada="2">Parada 2</a><a href="parada3.html" data-parada="3">Parada 3</a><a href="parada4.html" data-parada="4" aria-current="page">Parada 4</a></nav>
+</div></header>
+<main id="contenido">
+<section class="hero"><div class="wrap">
+<span class="badge">Parada 4 de 4</span>
+<h1>Interpretación y toma de decisiones</h1>
+<p class="lead">Usa tu tablero para responder las preguntas del gerente y recomendar una acción sustentada en datos.</p>
+<div class="meta"><span class="chip">Aprox. 15 minutos</span><span class="chip">Dos intentos por pregunta</span></div>
+</div></section>
+<div class="wrap">
+<section class="card accent" aria-labelledby="preg">
+<h2 id="preg">Ahora usa tu tablero para decidir</h2>
+<p>Ten abierto tu tablero. Usa el segmentador por mes para responder. Cada pregunta tiene dos intentos y una explicación.</p>
+<div id="quiz4"></div>
+<div id="quizFb" class="fb" hidden aria-live="polite"></div>
+</section>
+
+<section class="card" aria-labelledby="rec">
+<h2 id="rec">Tu recomendación al gerente</h2>
+<p>Escribe entre <strong>80 y 120 palabras</strong>. Una buena recomendación:</p>
+<ul>
+<li>dice qué línea y qué turno hay que priorizar;</li>
+<li>cita al menos <strong>dos indicadores con sus valores</strong> y los compara con la meta;</li>
+<li>propone una acción concreta y viable;</li>
+<li>no afirma causas que los datos no muestran (los datos dicen <em>dónde</em> está el problema, no <em>por qué</em>).</li>
+</ul>
+<label for="txtRec" class="sr">Recomendación</label>
+<textarea id="txtRec" placeholder="Recomiendo priorizar…"></textarea>
+<p class="counter" id="cnt" aria-live="polite">0 palabras</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" class="btn" id="btnRec">Ya terminé mi recomendación</button>
+<button type="button" class="btn sec" id="btnTxt">Descargar mi texto (.txt)</button>
+</div>
+<div id="recFb" class="fb" hidden aria-live="polite"></div>
+<p class="counter">Tu texto se guarda en este navegador mientras escribes, pero debes entregarlo en el aula virtual.</p>
+</section>
+
+<section class="card" id="referencia" aria-labelledby="refT" hidden>
+<h2 id="refT">Compara con el tablero de referencia</h2>
+<p>Estos son los valores que debería mostrar tu tablero. Si alguno no coincide, revisa tus medidas y filtros.</p>
+<h3>Cumplimiento del plan por mes (planta)</h3>
+<div class="tablewrap"><table><thead><tr><th>Mes</th><th>Cumplimiento</th><th>¿Cumple la meta de 95 %?</th></tr></thead><tbody>
+<tr><td>Julio</td><td>97,5 %</td><td>Sí</td></tr>
+<tr><td>Agosto</td><td>96,5 %</td><td>Sí</td></tr>
+<tr><td>Septiembre</td><td class="hl">93,0 %</td><td>No</td></tr>
+</tbody></table></div>
+<p>En el gráfico semanal, la caída empieza en la semana 36 (inicio de septiembre).</p>
+<h3>Septiembre por línea y turno</h3>
+<div class="tablewrap"><table><thead><tr><th>Línea y turno</th><th>Cumplimiento</th><th>% de defectos</th><th>Productividad (unid. conformes / h-h)</th></tr></thead><tbody>
+<tr><td>Queso costeño · Día</td><td>95,5 %</td><td>2,1 %</td><td>28,0</td></tr>
+<tr><td><strong>Queso costeño · Noche</strong></td><td class="hl">84,7 %</td><td class="hl">5,9 %</td><td class="hl">23,9</td></tr>
+<tr><td>Suero costeño · Día</td><td>94,9 %</td><td>2,3 %</td><td>34,8</td></tr>
+<tr><td>Suero costeño · Noche</td><td>95,1 %</td><td>2,3 %</td><td>34,9</td></tr>
+</tbody></table></div>
+<p class="counter">La productividad se compara dentro de cada línea, porque queso y suero tienen procesos distintos.</p>
+<h3>Ejemplo de recomendación</h3>
+<div class="fb info">Recomiendo priorizar la línea de queso costeño en el turno noche. En septiembre, su cumplimiento del plan fue de 84,7 %, frente a una meta de 95 %, y su porcentaje de defectos llegó a 5,9 %, casi el doble del máximo de 3 %. Además, su productividad (23,9 unidades conformes por hora-hombre) fue menor que la del turno día de la misma línea (28,0). Las demás combinaciones se mantienen cerca de las metas. Propongo un análisis de causa raíz en ese turno durante las próximas dos semanas, que revise mantenimiento de equipos, materia prima y supervisión, antes de definir una intervención mayor.</div>
+<p>Compara tu texto con el ejemplo: ¿citaste valores?, ¿evitaste afirmar la causa? Puedes mejorar tu recomendación antes de entregarla.</p>
+</section>
+
+<section class="card" aria-labelledby="refl">
+<h2 id="refl">Reflexiona</h2>
+<ul>
+<li>¿Qué cambiarías de tu tablero después de esta retroalimentación?</li>
+<li>¿Qué dato adicional necesitarías para confirmar la causa antes de que el gerente invierta en la intervención?</li>
+</ul>
+<p>Lleva tus respuestas a la sesión presencial.</p>
+</section>
+
+<section class="card accent" aria-labelledby="ent">
+<h2 id="ent">Entrega y cierre</h2>
+<p>Sube al aula virtual, antes de la sesión presencial:</p>
+<ol><li>La captura de tu tablero (PNG).</li><li>El archivo del tablero (.pbix o .xlsx).</li><li>Tu recomendación (puedes pegar el texto o subir el .txt).</li></ol>
+<p><a class="btn" id="lnkEntrega" href="#" hidden target="_blank" rel="noopener">Ir al espacio de entrega</a></p>
+<div class="fb ok"><strong>Idea para recordar:</strong> un buen tablero responde una pregunta de negocio. En la sesión presencial compararás tu tablero en equipo, acordarán una recomendación y la sustentarán ante el grupo.</div>
+<p><a id="lnkForo" href="#" hidden>¿Dudas? Escríbelas en el foro del curso</a></p>
+</section>
+<div class="navnext"><a class="btn sec" data-parada="3" href="parada3.html">← Parada 3</a></div></div>
+</main>
+<footer><div class="wrap">
+Elaborado por Luis Ángel Quiroz Herazo · Corporación Universitaria del Caribe – CECAR · 2026 · Licencia CC BY-NC-SA 4.0.<br>
+Lácteos Sabana Viva es una empresa ficticia y los datos son simulados con fines académicos.
+</div></footer>
+<script>
+
+/* ============================================================
+   CONFIGURACIÓN DEL DOCENTE
+   Pega entre las comillas los enlaces cuando los tengas.
+   Si un campo queda vacío, la página funciona igual: el video
+   muestra un aviso y los botones sin enlace se ocultan.
+   ============================================================ */
+var CONFIG = {
+  videoBienvenida: "",   // Enlace de YouTube del video de bienvenida (parada 1)
+  videoEjemplo: "",      // Enlace de YouTube del ejemplo resuelto (parada 2)
+  enlaceForo: "",        // Foro de dudas en el aula virtual
+  enlaceEntrega: "",     // Espacio de entrega de evidencias en el aula virtual
+  enlaceInicio: "",      // Pantalla principal del OVA (la infografía)
+  // Enlaces públicos de cada parada. Si los dejas vacíos, el menú
+  // busca los archivos en la misma carpeta (parada1.html, parada2.html…).
+  parada1: "", parada2: "", parada3: "", parada4: ""
+};
+
+
+function $(s,r){return (r||document).querySelector(s)}
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem('ova_kpi_'+k))}localStorage.setItem('ova_kpi_'+k,JSON.stringify(v))}catch(e){return null}}
+function ytEmbed(u){var m=u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?'https://www.youtube-nocookie.com/embed/'+m[1]:null}
+function renderVideo(id,url,title){var el=document.getElementById(id);if(!el||!url)return;var e=ytEmbed(url);
+ if(e){el.innerHTML='<div class="video"><iframe src="'+e+'" title="'+title+'" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'}
+ else{el.innerHTML='<p><a class="btn" href="'+url+'" target="_blank" rel="noopener">Ver video: '+title+'</a></p>'}}
+function setLink(id,url){var el=document.getElementById(id);if(!el)return;if(url){el.href=url;el.hidden=false}else{el.hidden=true}}
+function quiz(container,qs,attempts,onAnswer){
+ qs.forEach(function(q,qi){
+  var fs=document.createElement('fieldset');fs.className='q';
+  var h='<legend><strong>'+(q.label||('Pregunta '+(qi+1)))+'.</strong> '+q.text+'</legend>';
+  q.options.forEach(function(o,oi){h+='<label class="opt"><input type="radio" name="'+q.id+'" value="'+oi+'"><span>'+o+'</span></label>'});
+  h+='<button type="button" class="btn sm">Comprobar</button><div class="fb" hidden aria-live="polite"></div>';
+  fs.innerHTML=h;container.appendChild(fs);
+  var tries=0,btn=fs.querySelector('button'),fb=fs.querySelector('.fb');
+  function lock(r){fs.querySelectorAll('input').forEach(function(i){i.disabled=true});btn.disabled=true;q.result=r;if(onAnswer)onAnswer(qs)}
+  btn.addEventListener('click',function(){
+   var sel=fs.querySelector('input:checked');fb.hidden=false;
+   if(!sel){fb.className='fb info';fb.textContent='Selecciona una opción antes de comprobar.';return}
+   tries++;var v=+sel.value;
+   if(v===q.correct){fb.className='fb ok';fb.innerHTML='<strong>'+(q.okTitle||'¡Correcto!')+'</strong> '+q.ok;lock(true);return}
+   var msg=(q.wrong&&q.wrong[v])||q.hint||'';
+   if(tries<attempts){var left=attempts-tries;fb.className='fb no';fb.innerHTML='<strong>Revisa tu respuesta.</strong> '+msg+' <em>Te '+(left===1?'queda 1 intento':'quedan '+left+' intentos')+'.</em>'}
+   else{fb.className='fb no';fb.innerHTML='<strong>'+(msg?msg+' ':'')+'Respuesta correcta: '+q.options[q.correct]+'.</strong> '+q.ok;lock(false)}
+  });
+ });
+}
+document.querySelectorAll('.codebox .btn').forEach(function(b){b.addEventListener('click',function(){
+ var t=b.parentNode.querySelector('pre').innerText;
+ function done(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar'},1500)}
+ if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){})}else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove()}
+})});
+document.querySelectorAll('[role=tablist]').forEach(function(tl){var tabs=tl.querySelectorAll('[role=tab]');tabs.forEach(function(t){t.addEventListener('click',function(){
+ tabs.forEach(function(x){x.setAttribute('aria-selected','false');document.getElementById(x.getAttribute('aria-controls')).hidden=true});
+ t.setAttribute('aria-selected','true');document.getElementById(t.getAttribute('aria-controls')).hidden=false})})});
+document.querySelectorAll('a[data-parada]').forEach(function(a){var u=CONFIG['parada'+a.getAttribute('data-parada')];if(u)a.href=u});
+setLink('lnkForo',CONFIG.enlaceForo);setLink('lnkInicio',CONFIG.enlaceInicio);setLink('lnkEntrega',CONFIG.enlaceEntrega);
+
+
+var q4=[
+ {id:'p1',text:'¿Qué visual muestra mejor cómo cambia el cumplimiento semana a semana?',options:['Gráfico circular','Gráfico de líneas','Tarjeta','Tabla con los valores'],correct:1,
+  ok:'La línea permite ver en qué semana el cumplimiento cae por debajo de la meta. Usa ahora el segmentador para ver si la caída se concentra en algún mes.',
+  wrong:{0:'El circular muestra partes de un todo, no cambios en el tiempo.',2:'La tarjeta muestra un solo valor, no su evolución.',3:'La tabla obliga a leer número por número; la tendencia no se ve de un vistazo.'}},
+ {id:'p2',text:'Para comparar la calidad de dos líneas que producen volúmenes distintos, ¿qué conviene usar?',options:['El total de unidades defectuosas','El porcentaje de defectos','El total de unidades producidas','Las horas-hombre de cada línea'],correct:1,
+  ok:'El porcentaje (defectuosas ÷ producidas) permite comparar de forma justa aunque una línea produzca más.',
+  wrong:{0:'La línea que más produce también tendrá más defectos en cantidad. Cambia el valor del gráfico de barras por % Defectos.',2:'El volumen no dice nada sobre la calidad.',3:'Las horas-hombre sirven para la productividad, no para la calidad.'}},
+ {id:'p3',text:'¿En qué mes el cumplimiento del plan de la planta queda por debajo de la meta de 95 %?',options:['Julio','Agosto','Septiembre','En ningún mes'],correct:2,
+  ok:'En septiembre el cumplimiento de la planta fue de 93,0 %, frente a 97,5 % en julio y 96,5 % en agosto.',
+  hint:'Selecciona cada mes en el segmentador y mira la tarjeta de cumplimiento.'},
+ {id:'p4',text:'¿Qué combinación de línea y turno presenta el mayor porcentaje de defectos en septiembre?',options:['Queso costeño · Día','Queso costeño · Noche','Suero costeño · Día','Suero costeño · Noche'],correct:1,
+  ok:'Queso costeño en el turno noche llega a 5,9 % de defectos, frente a un máximo de 3 %. Las demás combinaciones están entre 2,1 % y 2,3 %.',
+  hint:'Filtra septiembre en el segmentador y busca la barra más alta en el gráfico de defectos.'}
+];
+quiz(document.getElementById('quiz4'),q4,2,function(qs){
+ if(!qs.every(function(q){return q.result!==undefined}))return;
+ var ok=qs.filter(function(q){return q.result}).length,fb=document.getElementById('quizFb');fb.hidden=false;
+ fb.className=ok>=3?'fb ok':'fb no';
+ fb.innerHTML=ok>=3?'<strong>'+ok+' de 4.</strong> Interpretas bien tu tablero. Ahora escribe tu recomendación.':'<strong>'+ok+' de 4.</strong> Revisa las explicaciones y tu tablero antes de escribir la recomendación.';
+});
+var ta=document.getElementById('txtRec'),cnt=document.getElementById('cnt');
+ta.value=store('rec')||'';
+function words(){var t=ta.value.trim();return t?t.split(/\s+/).length:0}
+function upd(){var n=words();cnt.textContent=n+' palabras'+(n<80?' (faltan '+(80-n)+' para el mínimo)':n>120?' (te pasaste por '+(n-120)+')':' ✓ dentro del rango');store('rec',ta.value)}
+ta.addEventListener('input',upd);upd();
+document.getElementById('btnRec').addEventListener('click',function(){
+ var n=words(),fb=document.getElementById('recFb');fb.hidden=false;
+ if(n<80){fb.className='fb no';fb.innerHTML='<strong>Tu texto tiene '+n+' palabras.</strong> Amplíalo hasta al menos 80: ¿citaste dos indicadores con sus valores y una acción concreta?';return}
+ if(n>120){fb.className='fb no';fb.innerHTML='<strong>Tu texto tiene '+n+' palabras.</strong> Resúmelo a 120 o menos: el gerente necesita una recomendación breve.';return}
+ var t=ta.value.toLowerCase(),hasNum=/\d/.test(t),pct=/%/.test(t);
+ fb.className='fb ok';fb.innerHTML='<strong>¡Bien!</strong> Ya puedes compararla con el tablero de referencia y el ejemplo que aparecen abajo.'+(hasNum&&pct?'':' Ojo: no encontramos cifras ni porcentajes en tu texto; una recomendación sustentada cita valores.');
+ var r=document.getElementById('referencia');r.hidden=false;r.scrollIntoView({behavior:'smooth'});
+});
+document.getElementById('btnTxt').addEventListener('click',function(){
+ var b=new Blob([ta.value],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='Recomendacion_gerente.txt';document.body.appendChild(a);a.click();a.remove();
+});
+
+</script>
+</body>
+</html>

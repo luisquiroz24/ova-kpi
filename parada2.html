@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parada 2 · Microcontenido y reglas de visualización · Del dato a la decisión</title>
+<style>
+:root{--ink:#14251B;--muted:#47574D;--line:#D3DCD5;--bg:#F5F8F5;--green:#0B6B2E;--green-d:#08471F}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+a{color:#0B5C8A}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+header.top{background:var(--green-d);color:#fff}
+header.top .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;flex-direction:column;line-height:1.25}
+.brand strong{font-size:17px}.brand span{font-size:14px;color:#CFE3D5}
+nav.paradas{display:flex;flex-wrap:wrap;gap:6px}
+nav.paradas a{color:#fff;text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid #4F7F5F;min-height:36px;display:inline-flex;align-items:center}
+nav.paradas a[aria-current=page]{background:#fff;color:var(--green-d);font-weight:700}
+.hero{background:var(--c-soft);border-bottom:5px solid var(--c)}
+.hero .wrap{padding-top:28px;padding-bottom:26px}
+.badge{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:4px 16px;font-weight:700;font-size:15px}
+h1{font-size:34px;line-height:1.15;margin:12px 0 8px}
+h2{font-size:24px;margin:0 0 10px;line-height:1.25}
+h3{font-size:19px;margin:16px 0 6px}
+.lead{font-size:19px;color:var(--muted);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.card.accent{border-top:5px solid var(--c)}
+.card.reto{background:#FFFBEA;border-color:#EBD58A}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.mini .n{font-weight:700;color:var(--c)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:10px;background:var(--green);color:#fff;font-weight:600;text-decoration:none;border:2px solid var(--green);cursor:pointer;font-size:16px;font-family:inherit}
+.btn:hover{background:var(--green-d)}
+.btn.sec{background:#fff;color:var(--green-d)}
+.btn.sec:hover{background:#EEF5F0}
+.btn.sm{min-height:40px;padding:0 14px;font-size:15px;margin-top:8px}
+.btn[disabled]{opacity:.55;cursor:default}
+.fb{border-radius:10px;padding:12px 14px;margin-top:10px}
+.fb.ok{background:#E6F4EA;border:1px solid #8CC49B}
+.fb.no{background:#FFF1E6;border:1px solid #EFB384}
+.fb.info{background:#EEF4FB;border:1px solid #A9C5E8}
+fieldset.q{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;background:#fff}
+fieldset.q legend{padding:0 6px;font-size:17px}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:8px;cursor:pointer}
+label.opt:hover{background:#F0F4F1}
+label.opt input{margin-top:6px;width:18px;height:18px;flex:none}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:16px;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#EEF3EF}
+td.hl{background:#FDECEC;font-weight:700}
+pre.code{background:#0F1F16;color:#E8F5EC;padding:14px;border-radius:10px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:14px;margin:8px 0;white-space:pre-wrap;word-break:break-word}
+.codebox{position:relative}
+.codebox pre.code{padding-right:84px}
+.codebox .btn{position:absolute;top:8px;right:8px;min-height:34px;padding:0 10px;font-size:13px;margin:0}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps>li{counter-increment:s;position:relative;padding-left:54px;margin:22px 0}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--c);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.video{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.placeholder{border:2px dashed #AEBBB2;border-radius:12px;padding:22px;text-align:center;color:var(--muted);background:#FAFCFA}
+.navnext{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:30px 0 10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin-bottom:10px}
+.tabs button{font:inherit;font-weight:600;background:none;border:none;border-bottom:4px solid transparent;padding:10px 14px;cursor:pointer;color:var(--muted);min-height:44px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--c)}
+.check label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;flex:none}
+select{font:inherit;padding:8px;border-radius:8px;border:1px solid #9AA9A0;min-height:44px;max-width:100%}
+.match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px 14px;align-items:center;margin:10px 0}
+.match .mark{font-weight:700}
+textarea{width:100%;min-height:180px;font:inherit;padding:12px;border-radius:10px;border:1px solid #9AA9A0}
+.counter{font-size:15px;color:var(--muted)}
+.visual{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.visual svg{width:120px;height:80px}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+footer{margin-top:40px;background:#EAF0EB;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{padding-top:16px;padding-bottom:16px}
+:focus-visible{outline:3px solid #E0A800;outline-offset:2px}
+.sr{position:absolute;left:-9999px}
+@media (max-width:640px){h1{font-size:28px}.match{grid-template-columns:1fr}body{font-size:16px}}
+</style>
+</head>
+<body style="--c:#2E7D32;--c-soft:#EAF5EA">
+<a class="sr" href="#contenido">Saltar al contenido</a>
+<header class="top"><div class="wrap">
+<div class="brand"><strong>Del dato a la decisión</strong><span>Analítica de datos 1 · Ingeniería Industrial · CECAR</span></div>
+<nav class="paradas" aria-label="Paradas del OVA"><a href="parada1.html" data-parada="1">Parada 1</a><a href="parada2.html" data-parada="2" aria-current="page">Parada 2</a><a href="parada3.html" data-parada="3">Parada 3</a><a href="parada4.html" data-parada="4">Parada 4</a></nav>
+</div></header>
+<main id="contenido">
+<section class="hero"><div class="wrap">
+<span class="badge">Parada 2 de 4</span>
+<h1>Microcontenido y reglas de visualización</h1>
+<p class="lead">Aprende qué es un KPI, cómo leer los tres indicadores del caso y qué visual responde mejor cada pregunta.</p>
+<div class="meta"><span class="chip">Aprox. 10 minutos</span><span class="chip">Texto, ejemplo resuelto y actividad</span></div>
+</div></section>
+<div class="wrap">
+<section class="card accent" aria-labelledby="kpi">
+<h2 id="kpi">¿Qué es un KPI?</h2>
+<p>Un <strong>KPI</strong> (indicador clave de desempeño) es una medida que se compara con una meta para saber si un proceso va bien y dónde actuar. No todo dato es un KPI: "unidades producidas" es una cifra; "cumplimiento del plan frente a una meta de 95 %" es un indicador que permite decidir.</p>
+<p>Todo KPI útil responde a una pregunta, tiene una fórmula clara, una meta y una forma de leerse. Estos son los tres de tu tablero:</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Indicador</th><th>Pregunta que responde</th><th>Fórmula</th><th>Meta</th><th>Cómo se lee</th></tr></thead>
+<tbody>
+<tr><td><strong>Cumplimiento del plan</strong></td><td>¿Producimos lo que planeamos?</td><td>Producidas ÷ planeadas × 100</td><td>≥ 95 %</td><td>Más alto es mejor. Por debajo de la meta hay una brecha.</td></tr>
+<tr><td><strong>% de defectos</strong></td><td>¿Qué tan buena es la calidad?</td><td>Defectuosas ÷ producidas × 100</td><td>≤ 3 %</td><td>Más bajo es mejor. Permite comparar líneas con volúmenes distintos.</td></tr>
+<tr><td><strong>Productividad laboral</strong></td><td>¿Cuánto produce cada hora de trabajo?</td><td>(Producidas − defectuosas) ÷ horas-hombre</td><td>Comparar entre turnos y líneas</td><td>Unidades conformes por hora-hombre. Más alto es mejor.</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="card" aria-labelledby="visual">
+<h2 id="visual">¿Qué visual usar según la pregunta?</h2>
+<div class="grid">
+<div class="mini visual"><svg viewBox="0 0 120 80" aria-hidden="true"><rect x="10" y="10" width="100" height="60" rx="8" fill="#fff" stroke="#2E7D32" stroke-width="3"/><rect x="28" y="28" width="64" height="16" rx="3" fill="#2E7D32"/><rect x="38" y="52" width="44" height="6" rx="3" fill="#9CC89F"/></svg><strong>¿Cuánto?</strong><span>Tarjeta: un solo número grande, como el cumplimiento del trimestre.</span></div>
+<div class="mini visual"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M10 70H112M10 70V8" stroke="#6B7B70" stroke-width="2" fill="none"/><polyline points="14,30 34,26 54,32 74,46 94,58 110,54" fill="none" stroke="#2E7D32" stroke-width="4" stroke-linejoin="round"/><path d="M10 34H112" stroke="#C2410C" stroke-width="2" stroke-dasharray="5 4"/></svg><strong>¿Cómo cambia?</strong><span>Línea: la evolución en el tiempo, idealmente con la meta marcada.</span></div>
+<div class="mini visual"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M10 70H112" stroke="#6B7B70" stroke-width="2"/><rect x="18" y="48" width="14" height="22" fill="#2E7D32"/><rect x="34" y="44" width="14" height="26" fill="#8BC08F"/><rect x="62" y="46" width="14" height="24" fill="#2E7D32"/><rect x="78" y="14" width="14" height="56" fill="#8BC08F"/></svg><strong>¿Cuál es mayor?</strong><span>Barras: comparar categorías, como líneas y turnos.</span></div>
+</div>
+<h3>Errores frecuentes</h3>
+<ul>
+<li><strong>Usar un gráfico circular para una tendencia.</strong> El circular muestra partes de un todo en un momento; no deja ver si algo sube o baja.</li>
+<li><strong>Comparar cantidades en lugar de porcentajes.</strong> La línea que más produce también tendrá más defectos en cantidad.</li>
+<li><strong>Describir sin decidir.</strong> "El cumplimiento fue 93 %" es una descripción; "hay que intervenir el turno noche porque…" es una decisión.</li>
+</ul>
+</section>
+
+<section class="card accent" aria-labelledby="ejemplo">
+<h2 id="ejemplo">Ejemplo resuelto: la tarjeta de cumplimiento</h2>
+<div id="videoEjemplo"><div class="placeholder">El video del ejemplo resuelto estará disponible pronto. Mientras tanto, sigue el ejemplo escrito.</div></div>
+<ol>
+<li><strong>Pregunta del gerente:</strong> ¿cumplimos el plan en julio?</li>
+<li><strong>Datos:</strong> en julio la planta planeó 159.030 unidades y produjo 155.054.</li>
+<li><strong>Cálculo:</strong> 155.054 ÷ 159.030 = 0,975, es decir, <strong>97,5 %</strong>.</li>
+<li><strong>Comparación con la meta:</strong> 97,5 % ≥ 95 %, así que julio cumplió.</li>
+<li><strong>Visual:</strong> como la pregunta es "¿cuánto?", se usa una <strong>tarjeta</strong>. En la parada 3 la construirás en Power BI y el segmentador por mes te permitirá ver los otros meses.</li>
+</ol>
+</section>
+
+<section class="card" aria-labelledby="act2">
+<h2 id="act2">Actividad: relaciona cada KPI con su propósito</h2>
+<p>Elige la opción que corresponde a cada elemento y luego comprueba.</p>
+<h3>A. Cada indicador con lo que permite saber</h3>
+<div id="matchA"></div>
+<h3>B. Cada pregunta con su visual</h3>
+<div id="matchB"></div>
+<button type="button" class="btn" id="btnMatch">Comprobar</button>
+<div id="matchFb" class="fb" hidden aria-live="polite"></div>
+</section>
+<div class="navnext"><a class="btn sec" data-parada="1" href="parada1.html">← Parada 1</a><a class="btn" data-parada="3" href="parada3.html">Ir a la parada 3 →</a></div>
+</div>
+</main>
+<footer><div class="wrap">
+Elaborado por Luis Ángel Quiroz Herazo · Corporación Universitaria del Caribe – CECAR · 2026 · Licencia CC BY-NC-SA 4.0.<br>
+Lácteos Sabana Viva es una empresa ficticia y los datos son simulados con fines académicos.
+</div></footer>
+<script>
+
+/* ============================================================
+   CONFIGURACIÓN DEL DOCENTE
+   Pega entre las comillas los enlaces cuando los tengas.
+   Si un campo queda vacío, la página funciona igual: el video
+   muestra un aviso y los botones sin enlace se ocultan.
+   ============================================================ */
+var CONFIG = {
+  videoBienvenida: "",   // Enlace de YouTube del video de bienvenida (parada 1)
+  videoEjemplo: "",      // Enlace de YouTube del ejemplo resuelto (parada 2)
+  enlaceForo: "",        // Foro de dudas en el aula virtual
+  enlaceEntrega: "",     // Espacio de entrega de evidencias en el aula virtual
+  enlaceInicio: "",      // Pantalla principal del OVA (la infografía)
+  // Enlaces públicos de cada parada. Si los dejas vacíos, el menú
+  // busca los archivos en la misma carpeta (parada1.html, parada2.html…).
+  parada1: "", parada2: "", parada3: "", parada4: ""
+};
+
+
+function $(s,r){return (r||document).querySelector(s)}
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem('ova_kpi_'+k))}localStorage.setItem('ova_kpi_'+k,JSON.stringify(v))}catch(e){return null}}
+function ytEmbed(u){var m=u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?'https://www.youtube-nocookie.com/embed/'+m[1]:null}
+function renderVideo(id,url,title){var el=document.getElementById(id);if(!el||!url)return;var e=ytEmbed(url);
+ if(e){el.innerHTML='<div class="video"><iframe src="'+e+'" title="'+title+'" allow="fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'}
+ else{el.innerHTML='<p><a class="btn" href="'+url+'" target="_blank" rel="noopener">Ver video: '+title+'</a></p>'}}
+function setLink(id,url){var el=document.getElementById(id);if(!el)return;if(url){el.href=url;el.hidden=false}else{el.hidden=true}}
+function quiz(container,qs,attempts,onAnswer){
+ qs.forEach(function(q,qi){
+  var fs=document.createElement('fieldset');fs.className='q';
+  var h='<legend><strong>'+(q.label||('Pregunta '+(qi+1)))+'.</strong> '+q.text+'</legend>';
+  q.options.forEach(function(o,oi){h+='<label class="opt"><input type="radio" name="'+q.id+'" value="'+oi+'"><span>'+o+'</span></label>'});
+  h+='<button type="button" class="btn sm">Comprobar</button><div class="fb" hidden aria-live="polite"></div>';
+  fs.innerHTML=h;container.appendChild(fs);
+  var tries=0,btn=fs.querySelector('button'),fb=fs.querySelector('.fb');
+  function lock(r){fs.querySelectorAll('input').forEach(function(i){i.disabled=true});btn.disabled=true;q.result=r;if(onAnswer)onAnswer(qs)}
+  btn.addEventListener('click',function(){
+   var sel=fs.querySelector('input:checked');fb.hidden=false;
+   if(!sel){fb.className='fb info';fb.textContent='Selecciona una opción antes de comprobar.';return}
+   tries++;var v=+sel.value;
+   if(v===q.correct){fb.className='fb ok';fb.innerHTML='<strong>'+(q.okTitle||'¡Correcto!')+'</strong> '+q.ok;lock(true);return}
+   var msg=(q.wrong&&q.wrong[v])||q.hint||'';
+   if(tries<attempts){var left=attempts-tries;fb.className='fb no';fb.innerHTML='<strong>Revisa tu respuesta.</strong> '+msg+' <em>Te '+(left===1?'queda 1 intento':'quedan '+left+' intentos')+'.</em>'}
+   else{fb.className='fb no';fb.innerHTML='<strong>'+(msg?msg+' ':'')+'Respuesta correcta: '+q.options[q.correct]+'.</strong> '+q.ok;lock(false)}
+  });
+ });
+}
+document.querySelectorAll('.codebox .btn').forEach(function(b){b.addEventListener('click',function(){
+ var t=b.parentNode.querySelector('pre').innerText;
+ function done(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar'},1500)}
+ if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){})}else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove()}
+})});
+document.querySelectorAll('[role=tablist]').forEach(function(tl){var tabs=tl.querySelectorAll('[role=tab]');tabs.forEach(function(t){t.addEventListener('click',function(){
+ tabs.forEach(function(x){x.setAttribute('aria-selected','false');document.getElementById(x.getAttribute('aria-controls')).hidden=true});
+ t.setAttribute('aria-selected','true');document.getElementById(t.getAttribute('aria-controls')).hidden=false})})});
+document.querySelectorAll('a[data-parada]').forEach(function(a){var u=CONFIG['parada'+a.getAttribute('data-parada')];if(u)a.href=u});
+setLink('lnkForo',CONFIG.enlaceForo);setLink('lnkInicio',CONFIG.enlaceInicio);setLink('lnkEntrega',CONFIG.enlaceEntrega);
+
+
+renderVideo('videoEjemplo',CONFIG.videoEjemplo,'Ejemplo resuelto: tarjeta de cumplimiento');
+var A={opts:['— Elige —','Si se produjo lo que se planeó','Qué tan buena es la calidad, aunque los volúmenes sean distintos','Cuántas unidades buenas genera cada hora de trabajo'],
+ items:[['Cumplimiento del plan',1],['% de defectos',2],['Productividad laboral',3]]};
+var B={opts:['— Elige —','Tarjeta','Gráfico de líneas','Barras agrupadas'],
+ items:[['¿Cuál fue el cumplimiento del trimestre?',1],['¿Cómo cambió el cumplimiento semana a semana?',2],['¿Qué línea y turno tienen más defectos?',3]]};
+function buildMatch(id,m){var c=document.getElementById(id);m.items.forEach(function(it,i){
+ var row=document.createElement('div');row.className='match';var sid=id+'_'+i;
+ row.innerHTML='<label for="'+sid+'">'+it[0]+'</label><div><select id="'+sid+'">'+m.opts.map(function(o,j){return '<option value="'+j+'">'+o+'</option>'}).join('')+'</select> <span class="mark" aria-live="polite"></span></div>';
+ c.appendChild(row)})}
+buildMatch('matchA',A);buildMatch('matchB',B);
+document.getElementById('btnMatch').addEventListener('click',function(){
+ var ok=0,total=0;[['matchA',A],['matchB',B]].forEach(function(p){p[1].items.forEach(function(it,i){total++;
+  var s=document.getElementById(p[0]+'_'+i),mk=s.parentNode.querySelector('.mark');
+  if(+s.value===it[1]){ok++;mk.textContent='✓ Correcto';mk.style.color='#1E6B2F'}else{mk.textContent='✗ Revisa';mk.style.color='#B4410C'}})});
+ var fb=document.getElementById('matchFb');fb.hidden=false;
+ if(ok===total){fb.className='fb ok';fb.innerHTML='<strong>¡Excelente! '+ok+' de '+total+'.</strong> Ya sabes qué mide cada KPI y qué visual responde cada pregunta. Estás listo para construir tu tablero.'}
+ else{fb.className='fb no';fb.innerHTML='<strong>'+ok+' de '+total+'.</strong> Vuelve a la tabla de indicadores y a la regla de visuales, ajusta las marcadas con ✗ y comprueba de nuevo.'}
+});
+
+</script>
+</body>
+</html>
