@@ -100,7 +100,71 @@ footer .wrap{padding-top:16px;padding-bottom:16px}
 <div class="wrap">
 <section class="card accent" aria-labelledby="bienv">
 <h2 id="bienv">Bienvenida</h2>
-<div id="videoBienvenida"><div class="placeholder">El video de bienvenida estará disponible pronto. El texto de esta página contiene toda la información que necesitas.</div></div>
+<figure style="margin:0 0 14px">
+<svg viewBox="0 0 900 400" role="img" aria-label="Ilustración de un tablero de analítica de datos: tarjetas de indicadores, un gráfico de líneas con su meta, un gráfico de barras analizado con una lupa y el recorrido de los datos a los indicadores y a la decisión" style="width:100%;height:auto;display:block;border-radius:14px">
+<rect width="900" height="400" fill="#0A3D1F"/>
+<g stroke="#1C5A33" stroke-width="1">
+<path d="M0 50H900M0 100H900M0 150H900M0 200H900M0 250H900M0 300H900M0 350H900"/>
+<path d="M75 0V400M150 0V400M225 0V400M300 0V400M375 0V400M450 0V400M525 0V400M600 0V400M675 0V400M750 0V400M825 0V400"/>
+</g>
+<circle cx="820" cy="60" r="120" fill="#F5B800" opacity=".12"/>
+<circle cx="80" cy="370" r="110" fill="#4CAF50" opacity=".14"/>
+<!-- tarjetas KPI -->
+<g font-family="Segoe UI, Arial, sans-serif">
+<rect x="40" y="40" width="190" height="92" rx="14" fill="#FFFFFF"/>
+<text x="58" y="70" font-size="15" fill="#47574D" font-weight="600">Cumplimiento</text>
+<rect x="58" y="84" width="96" height="26" rx="6" fill="#1565C0"/>
+<polyline points="166,108 178,100 190,104 202,92 214,96" fill="none" stroke="#1565C0" stroke-width="3" stroke-linecap="round"/>
+<rect x="40" y="148" width="190" height="92" rx="14" fill="#FFFFFF"/>
+<text x="58" y="178" font-size="15" fill="#47574D" font-weight="600">% Defectos</text>
+<rect x="58" y="192" width="70" height="26" rx="6" fill="#C2410C"/>
+<polyline points="140,214 156,208 172,212 188,196 214,190" fill="none" stroke="#C2410C" stroke-width="3" stroke-linecap="round"/>
+<rect x="40" y="256" width="190" height="92" rx="14" fill="#FFFFFF"/>
+<text x="58" y="286" font-size="15" fill="#47574D" font-weight="600">Productividad</text>
+<rect x="58" y="300" width="84" height="26" rx="6" fill="#2E7D32"/>
+<polyline points="154,322 168,316 182,318 198,308 214,304" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round"/>
+<!-- gráfico de líneas -->
+<rect x="258" y="40" width="330" height="200" rx="14" fill="#FFFFFF"/>
+<text x="278" y="70" font-size="15" fill="#47574D" font-weight="600">Cumplimiento por semana</text>
+<path d="M282 210H568" stroke="#C9D3CC" stroke-width="2"/>
+<path d="M282 112H568" stroke="#C2410C" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="520" y="104" font-size="13" fill="#C2410C" font-weight="700">Meta</text>
+<polyline points="290,100 330,96 370,102 410,98 450,108 490,150 530,160 562,146" fill="none" stroke="#1565C0" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+<g fill="#1565C0"><circle cx="290" cy="100" r="5"/><circle cx="330" cy="96" r="5"/><circle cx="370" cy="102" r="5"/><circle cx="410" cy="98" r="5"/><circle cx="450" cy="108" r="5"/><circle cx="562" cy="146" r="5"/></g>
+<circle cx="510" cy="155" r="24" fill="none" stroke="#F5B800" stroke-width="4"/>
+<circle cx="490" cy="150" r="6" fill="#C2410C"/><circle cx="530" cy="160" r="6" fill="#C2410C"/>
+<!-- barras con lupa -->
+<rect x="258" y="256" width="330" height="92" rx="14" fill="#FFFFFF"/>
+<g>
+<rect x="290" y="306" width="22" height="30" fill="#2E7D32"/><rect x="314" y="302" width="22" height="34" fill="#8BC08F"/>
+<rect x="360" y="304" width="22" height="32" fill="#2E7D32"/><rect x="384" y="276" width="22" height="60" fill="#C2410C"/>
+<rect x="430" y="300" width="22" height="36" fill="#2E7D32"/><rect x="454" y="302" width="22" height="34" fill="#8BC08F"/>
+<rect x="500" y="303" width="22" height="33" fill="#2E7D32"/><rect x="524" y="301" width="22" height="35" fill="#8BC08F"/>
+<path d="M282 336H568" stroke="#C9D3CC" stroke-width="2"/>
+</g>
+<!-- lupa grande -->
+<g transform="translate(395 262)">
+<circle cx="0" cy="0" r="34" fill="#FFFFFF" fill-opacity=".25" stroke="#14251B" stroke-width="7"/>
+<path d="M24 24L52 52" stroke="#14251B" stroke-width="11" stroke-linecap="round"/>
+</g>
+<!-- flujo dato a decisión -->
+<g font-size="18" font-weight="700" fill="#FFFFFF">
+<rect x="620" y="60" width="240" height="64" rx="32" fill="#1C5A33" stroke="#4CAF50" stroke-width="2"/>
+<g transform="translate(646 76)" stroke="#FFFFFF" stroke-width="2.5" fill="none"><ellipse cx="14" cy="6" rx="14" ry="6"/><path d="M0 6v20c0 3 6 6 14 6s14-3 14-6V6"/><path d="M0 16c0 3 6 6 14 6s14-3 14-6"/></g>
+<text x="690" y="99">Datos</text>
+<path d="M740 132v26" stroke="#F5B800" stroke-width="4"/><path d="M730 150l10 12 10-12" fill="none" stroke="#F5B800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="620" y="168" width="240" height="64" rx="32" fill="#1C5A33" stroke="#4CAF50" stroke-width="2"/>
+<g transform="translate(646 184)" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M2 30V18M12 30V8M22 30V14M0 31h30"/></g>
+<text x="690" y="207">Indicadores</text>
+<path d="M740 240v26" stroke="#F5B800" stroke-width="4"/><path d="M730 258l10 12 10-12" fill="none" stroke="#F5B800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="620" y="276" width="240" height="64" rx="32" fill="#F5B800"/>
+<g transform="translate(648 290)" stroke="#14251B" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M12 0a11 11 0 0 0-6 20v5h12v-5A11 11 0 0 0 12 0z"/><path d="M7 30h10"/></g>
+<text x="690" y="315" fill="#14251B">Decisión</text>
+</g>
+</g>
+</svg>
+</figure>
+
 <p>En este OVA vas a hacer lo que hace un ingeniero industrial cuando monitorea un proceso: convertir datos de producción en un tablero de indicadores y usarlo para recomendar una decisión. Recorrerás cuatro paradas en menos de una hora.</p>
 </section>
 
@@ -175,7 +239,6 @@ Lácteos Sabana Viva es una empresa ficticia y los datos son simulados con fines
    muestra un aviso y los botones sin enlace se ocultan.
    ============================================================ */
 var CONFIG = {
-  videoBienvenida: "",   // Enlace de YouTube del video de bienvenida (parada 1)
   videoEjemplo: "",      // Enlace de YouTube del ejemplo resuelto (parada 2)
   enlaceForo: "",        // Foro de dudas en el aula virtual
   enlaceEntrega: "",     // Espacio de entrega de evidencias en el aula virtual
@@ -225,7 +288,6 @@ document.querySelectorAll('a[data-parada]').forEach(function(a){var u=CONFIG['pa
 setLink('lnkForo',CONFIG.enlaceForo);setLink('lnkInicio',CONFIG.enlaceInicio);setLink('lnkEntrega',CONFIG.enlaceEntrega);
 
 
-renderVideo('videoBienvenida',CONFIG.videoBienvenida,'Bienvenida al OVA');
 var diag=[
  {id:'d1',label:'D1',text:'La línea A produjo 10.000 unidades con 200 defectuosas. La línea B produjo 4.000 con 120 defectuosas. ¿Cuál tiene peor calidad?',
   options:['La línea A, porque tiene más unidades defectuosas','La línea B, porque su porcentaje de defectos es mayor','Las dos tienen la misma calidad'],correct:1,
